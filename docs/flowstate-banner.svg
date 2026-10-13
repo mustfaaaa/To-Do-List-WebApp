@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 400" role="img" aria-labelledby="title desc">
+  <title id="title">FLOWSTATE — make space for what matters</title>
+  <desc id="desc">Forest-green banner with lime brand details and a quiet task-list illustration.</desc>
+  <rect width="1440" height="400" rx="24" fill="#101713"/>
+  <path d="M0 319h1440M0 320h1440" stroke="#2a382e" opacity=".55"/>
+  <path d="M137 0v400M272 0v400M407 0v400M542 0v400M677 0v400M812 0v400" stroke="#233128" opacity=".35"/>
+  <g transform="translate(76 56) skewX(-18)">
+    <rect width="44" height="8" fill="#c7f36b"/>
+    <rect y="16" width="32" height="8" fill="#f1f5f0"/>
+    <rect y="32" width="19" height="8" fill="#f1f5f0"/>
+  </g>
+  <text x="150" y="81" fill="#c7f36b" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="700" letter-spacing="3">THE PERSONAL PRODUCTIVITY STUDIO</text>
+  <text x="76" y="190" fill="#f1f5f0" font-family="Segoe UI, Arial, sans-serif" font-size="91" font-weight="750" letter-spacing="-5">FLOWSTATE<tspan fill="#c7f36b">.</tspan></text>
+  <text x="80" y="245" fill="#d3dfd5" font-family="Segoe UI, Arial, sans-serif" font-size="30" font-weight="400" letter-spacing="-.8">Make space for what matters.</text>
+  <text x="80" y="356" fill="#9eafa2" font-family="Segoe UI, Arial, sans-serif" font-size="15" letter-spacing="2.4">CAPTURE  /  ORGANIZE  /  FOCUS  /  FINISH</text>
+  <g transform="translate(925 55)">
+    <rect width="435" height="284" rx="19" fill="#19231d" stroke="#38513d" stroke-width="2"/>
+    <circle cx="29" cy="30" r="5" fill="#c7f36b"/>
+    <circle cx="46" cy="30" r="5" fill="#536958"/>
+    <circle cx="63" cy="30" r="5" fill="#536958"/>
+    <path d="M24 58h387" stroke="#344638"/>
+    <text x="25" y="91" fill="#e9f1ea" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="650">Today, with intention</text>
+    <g transform="translate(25 112)">
+      <rect width="385" height="43" rx="8" fill="#233328"/>
+      <rect x="14" y="13" width="17" height="17" rx="5" fill="#c7f36b"/>
+      <path d="m18 21 4 4 7-9" fill="none" stroke="#193b32" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M47 21h169" stroke="#c7d6c8" stroke-width="7" stroke-linecap="round"/>
+      <path d="M47 33h94" stroke="#65796b" stroke-width="4" stroke-linecap="round"/>
+      <rect x="327" y="17" width="40" height="8" rx="4" fill="#49624c"/>
+    </g>
+    <g transform="translate(25 164)">
+      <rect width="385" height="43" rx="8" fill="#233328"/>
+      <rect x="14" y="13" width="17" height="17" rx="5" fill="none" stroke="#9cb0a0" stroke-width="2"/>
+      <path d="M47 21h210" stroke="#c7d6c8" stroke-width="7" stroke-linecap="round"/>
+      <path d="M47 33h109" stroke="#65796b" stroke-width="4" stroke-linecap="round"/>
+      <rect x="327" y="17" width="40" height="8" rx="4" fill="#49624c"/>
+    </g>
+    <g transform="translate(25 216)">
+      <rect width="385" height="43" rx="8" fill="#233328"/>
+      <rect x="14" y="13" width="17" height="17" rx="5" fill="none" stroke="#9cb0a0" stroke-width="2"/>
+      <path d="M47 21h142" stroke="#c7d6c8" stroke-width="7" stroke-linecap="round"/>
+      <path d="M47 33h122" stroke="#65796b" stroke-width="4" stroke-linecap="round"/>
+      <rect x="327" y="17" width="40" height="8" rx="4" fill="#49624c"/>
+    </g>
+  </g>
+</svg>
