@@ -1,0 +1,11 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><title>FLOWSTATE isolated QA fixtures</title><style>body{font:16px system-ui;max-width:680px;margin:60px auto;padding:20px}button{display:block;padding:15px;margin:15px 0}p{line-height:1.6}</style><h1>Isolated browser QA</h1><p>Run on a separate port/profile. These controls create disposable test data in this origin. They are excluded from the production build.</p><button id="expired">Resume a focus session with two seconds left</button><button id="corrupt">Load corrupted task storage</button><button id="empty">Reset disposable QA workspace</button><script type="module">
+import { initialState, STORAGE_KEY, makeTask } from '../model.js';
+document.getElementById('expired').onclick = () => {
+  const state = initialState(); state.tasks.push(makeTask({ title: 'QA focus recovery task', priority: 'high' }));
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  localStorage.setItem('flowstate.timer.v1', JSON.stringify({ mode: 'focus', remaining: 2, running: true, endsAt: Date.now() + 2000, taskId: state.tasks[0].id, sessionId: 'qa-resumed-session' }));
+  location.href = '/';
+};
+document.getElementById('corrupt').onclick = () => { localStorage.setItem(STORAGE_KEY, '{invalid json'); localStorage.removeItem('flowstate.timer.v1'); location.href = '/'; };
+document.getElementById('empty').onclick = () => { localStorage.removeItem(STORAGE_KEY); localStorage.removeItem('flowstate.timer.v1'); localStorage.removeItem('flowstate.recovery'); location.href = '/'; };
+</script></html>

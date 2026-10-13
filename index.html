@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f8fa">
+  <meta name="description" content="FLOWSTATE — an intentional studio for your tasks, focus, and meaningful progress. Private to your browser.">
+  <title>FLOWSTATE — Make room for what matters</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <script>try { const p = JSON.parse(localStorage.getItem('flowstate.v1'))?.preferences; if (['dark','light'].includes(p?.theme)) document.documentElement.dataset.theme = p.theme; } catch {}</script>
+  <link rel="stylesheet" href="styles.css">
+  <script type="module" src="app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to workspace</a>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Workspace navigation">
+      <a class="brand" href="#today" aria-label="FLOWSTATE home"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span><span>flowstate<span class="brand-sub">Your productivity studio</span></span></a>
+      <button class="new-task primary" data-action="new"><span data-icon="plus"></span>New task<kbd>N</kbd></button>
+      <nav id="navigation" aria-label="Task views">
+        <button class="nav-item active" data-view="today"><span class="nav-icon" data-icon="sun"></span><span>Today</span><span class="nav-count" id="count-today">0</span></button>
+        <button class="nav-item" data-view="upcoming"><span class="nav-icon" data-icon="calendar"></span><span>Upcoming</span><span class="nav-count" id="count-upcoming">0</span></button>
+        <button class="nav-item" data-view="all"><span class="nav-icon" data-icon="layers"></span><span>All tasks</span><span class="nav-count" id="count-all">0</span></button>
+        <button class="nav-item" data-view="board"><span class="nav-icon" data-icon="board"></span><span>Board</span></button>
+        <button class="nav-item" data-view="completed"><span class="nav-icon" data-icon="check"></span><span>Completed</span><span class="nav-count" id="count-completed">0</span></button>
+      </nav>
+      <button class="nav-focus" data-action="focus"><span data-icon="focus"></span><span>Focus studio</span><span data-icon="arrow"></span></button>
+      <div class="sidebar-bottom">
+        <button class="utility" data-action="palette"><span data-icon="command"></span>Commands<kbd>Ctrl K</kbd></button>
+        <button class="utility" data-action="theme"><span data-icon="moon"></span><span id="theme-label">Dark appearance</span></button>
+        <button class="utility" data-action="settings"><span data-icon="settings"></span>Settings & data</button>
+        <div class="profile"><span id="avatar">Y</span><div><strong id="profile-name">Your workspace</strong><small><i></i>Saved in this browser</small></div></div>
+      </div>
+    </aside>
+    <div class="workspace">
+      <header class="topbar"><span id="breadcrumb">Today</span><div class="topbar-actions"><button class="topbar-focus" data-action="focus"><span data-icon="focus"></span>Focus studio<span id="dock-timer" hidden>25:00</span></button><button class="icon-button" data-action="palette" aria-label="Open command menu"><span data-icon="command"></span></button><button class="mobile-settings icon-button" data-action="settings" aria-label="Settings & data"><span data-icon="settings"></span></button><button class="mobile-new primary" data-action="new" aria-label="New task"><span data-icon="plus"></span></button></div></header>
+      <main id="main" tabindex="-1">
+        <div id="storage-warning" class="storage-warning" hidden role="alert"></div>
+        <div class="page-heading"><div class="heading-context"><p id="greeting">Good evening.</p><span id="date-label"></span></div><h1 id="view-title">Make space for today<span class="accent">.</span></h1><p class="page-description" id="view-description">Choose what matters. Take it one thing at a time.</p></div>
+        <section class="daily-line" aria-label="Daily intention and progress"><div class="intention-wrap"><span class="label">Your intention</span><button id="intention" data-action="settings" title="Edit your daily intention">Make room for what matters.</button></div><div class="daily-progress"><div><span id="progress-copy">A fresh start</span><strong id="progress-percent">0%</strong></div><div class="progress-track"><div id="progress-fill"></div></div></div></section>
+        <div class="content-grid">
+          <section class="task-workspace" aria-labelledby="list-title">
+            <div class="section-heading"><div><h2 id="list-title">Your attention</h2><span id="list-count" class="small-count">0</span></div><button class="text-button" id="clear-filters" hidden>Clear filters</button></div>
+            <form class="quick-add" id="quick-form"><span data-icon="plus" aria-hidden="true"></span><input id="quick-input" aria-label="Quick add a task" autocomplete="off" maxlength="500" placeholder="What’s your next move?"><button type="submit" class="quick-submit" aria-label="Review quick add task"><span>Add task</span><span data-icon="arrow"></span></button></form>
+            <div class="quick-preview" id="quick-preview" aria-live="polite">Add a thought. Use <code>#project</code>, <code>tomorrow</code> or <code>25m</code> to give it shape.</div>
+            <div id="task-scope" class="task-scope" role="group" aria-label="Task status" hidden><button type="button" data-scope="all" aria-pressed="true">All</button><button type="button" data-scope="active" aria-pressed="false">Active</button><button type="button" data-scope="completed" aria-pressed="false">Completed</button></div>
+            <div class="list-tools"><div class="search-box"><span data-icon="search"></span><input id="search" type="search" placeholder="Search your tasks" aria-label="Search tasks"><kbd>/</kbd></div><button class="filter-toggle secondary" id="filter-toggle" aria-label="Toggle filters" aria-expanded="false"><span data-icon="filter"></span><span>Filter</span></button><select id="sort" aria-label="Sort tasks"><option value="priority">Priority first</option><option value="due">Due date</option><option value="newest">Newest first</option><option value="title">Title A–Z</option></select></div>
+            <div id="filters" class="filters" hidden><label>Priority<select id="priority-filter"><option value="">All priorities</option><option value="high">High</option><option value="medium">Medium</option><option value="low">Low</option></select></label><label>Project<select id="category-filter"><option value="">All projects</option></select></label></div>
+            <div id="task-list" class="task-list"></div>
+            <div class="list-footer"><span id="remaining-copy">No loose ends.</span><span>One thing at a time.</span></div>
+          </section>
+          <aside class="right-rail" aria-label="Progress and focus">
+            <section class="insights" aria-labelledby="insights-heading">
+              <div class="section-heading"><h2 id="insights-heading">A little perspective</h2><span data-icon="activity"></span></div>
+              <div class="insight-numbers"><div class="insight-main"><strong id="completed-today">0</strong><span>Done today</span></div><div><strong id="remaining">0</strong><span>Still to do</span></div></div>
+              <div class="chart-heading"><span>The past seven days</span><span id="activity-total">0 completed</span></div><div id="activity-chart" class="activity-chart" role="img" aria-label="Seven-day task completion activity"></div><p id="reflection" class="reflection">A little progress goes a long way. Your story starts with the first task.</p><div id="achievement" class="achievement" hidden></div>
+            </section>
+            <section class="focus-panel" aria-labelledby="focus-heading"><div class="focus-invitation"><span data-icon="focus"></span><span id="timer-display" class="mini-timer">25:00</span></div><h2 id="focus-heading">Less noise.<br>More focus.</h2><p id="timer-status">A fresh 25 minutes</p><button class="focus-launch" data-action="focus">Enter the focus studio<span data-icon="arrow"></span></button><div class="focus-history"><span><strong id="focus-sessions">0</strong> sessions</span><span id="session-note">Your own pace.</span></div></section>
+          </aside>
+        </div>
+        <footer class="page-footer"><span>Less scattered. More present.</span><span id="footer-date">FLOWSTATE / 2026</span></footer>
+      </main>
+    </div>
+  </div>
+  <dialog id="task-dialog" class="task-dialog" aria-labelledby="task-dialog-title">
+    <form id="task-form">
+      <div class="dialog-heading"><div><span class="eyebrow">A little intention</span><h2 id="task-dialog-title">Make your next move.</h2></div><button type="button" class="icon-button" data-close aria-label="Close task dialog"><span data-icon="close"></span></button></div>
+      <input type="hidden" id="task-id">
+      <label>Task title <span class="required">*</span><input id="task-title" required maxlength="200" placeholder="One thing you want to move forward" autocomplete="off"></label>
+      <label>Description <span class="optional">optional</span><textarea id="task-description" rows="3" maxlength="5000" placeholder="A first step, a useful link, a few details…"></textarea></label>
+      <div class="form-grid">
+        <label>Priority<select id="task-priority"><option value="high">High priority</option><option value="medium" selected>Medium priority</option><option value="low">Low priority</option></select></label>
+        <label>Project <span class="optional">optional</span><input id="task-category" maxlength="50" list="project-options" placeholder="e.g. university"><datalist id="project-options"></datalist></label>
+        <label>Due date <span class="optional">optional</span><input id="task-due" type="date"></label>
+        <label>Estimate <span class="optional">minutes</span><input id="task-duration" type="number" min="1" max="1440" step="1" placeholder="25"></label>
+        <label class="wide">Workflow<select id="task-status"><option value="todo">To do</option><option value="progress">In progress</option><option value="done">Done</option></select></label>
+      </div>
+      <p id="task-error" class="form-error" role="alert"></p><p id="task-timestamps" class="task-timestamps"></p>
+      <div class="dialog-footer"><button type="button" class="secondary" data-close>Cancel</button><button type="submit" class="primary" id="save-task">Create task<span data-icon="arrow"></span></button></div>
+    </form>
+  </dialog>
+  <dialog id="settings-dialog" aria-labelledby="settings-heading"><form id="settings-form"><div class="dialog-heading"><div><span class="eyebrow">Your workspace</span><h2 id="settings-heading">Make yourself at home.</h2></div><button type="button" class="icon-button" data-close aria-label="Close settings"><span data-icon="close"></span></button></div><label>Your first name <span class="optional">optional</span><input id="settings-name" maxlength="40" placeholder="What should we call you?"></label><label>Daily intention<input id="settings-focus" maxlength="140" placeholder="Make room for what matters."></label><div class="settings-appearance"><div><h3>Appearance</h3><p>A space for every time of day.</p></div><button type="button" class="secondary" data-action="theme" id="settings-theme">Switch theme</button></div><div class="settings-data"><h3>Keep a little backup.</h3><p>Your tasks and focus history live in this browser. They don’t sync between devices. Export regularly: localStorage is not cloud backup.</p><div class="data-actions"><button type="button" class="secondary" id="export-data"><span data-icon="download"></span>Export JSON</button><button type="button" class="secondary" id="import-data"><span data-icon="upload"></span>Import JSON</button></div><input type="file" id="import-file" accept=".json,application/json" hidden><p id="import-error" role="alert" class="form-error"></p></div><div class="dialog-footer"><button type="button" class="secondary" data-close>Cancel</button><button type="submit" class="primary">Save preferences</button></div></form></dialog>
+  <dialog id="import-dialog" aria-labelledby="import-heading"><div class="dialog-heading"><div><span class="eyebrow">Restore your space</span><h2 id="import-heading">Replace existing data?</h2></div><button type="button" class="icon-button" data-close aria-label="Cancel import"><span data-icon="close"></span></button></div><p id="import-summary"></p><p>This replaces your tasks, preferences, and focus history. Export your current data first if you want to keep a backup.</p><div class="dialog-footer"><button class="secondary" data-close>Cancel</button><button class="primary" id="confirm-import">Replace & import</button></div></dialog>
+  <dialog id="confirmation-dialog" aria-labelledby="confirmation-heading"><div class="dialog-heading"><div><span class="eyebrow">A moment to check</span><h2 id="confirmation-heading">Start fresh?</h2></div><button type="button" class="icon-button" data-close aria-label="Cancel confirmation"><span data-icon="close"></span></button></div><p id="confirmation-copy"></p><div class="dialog-footer"><button class="secondary" data-close>Keep current</button><button class="primary" id="confirmation-accept">Continue</button></div></dialog>
+  <dialog id="palette-dialog" class="palette-dialog" aria-label="Command menu"><div class="palette-search"><span data-icon="search"></span><input id="command-input" placeholder="Find your next move…" aria-label="Search commands" autocomplete="off"><button class="text-button" data-close>Esc</button></div><div id="command-list"></div><div class="palette-hint">↑ ↓ to navigate<span>Enter to select</span></div></dialog>
+  <dialog id="focus-dialog" class="focus-dialog" aria-labelledby="focus-full-title">
+    <div class="focus-full-top"><a class="brand" href="#today" data-close><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span><span>flowstate<span class="brand-sub">The focus studio</span></span></a><button class="secondary" data-close aria-label="Return to workspace"><span data-icon="close"></span><span>Return to workspace</span><kbd>Esc</kbd></button></div>
+    <div class="focus-full-content"><span class="eyebrow" id="timer-mode">One thing at a time</span><h2 id="focus-full-title">A little space to think.</h2>
+      <div class="focus-presets" role="group" aria-label="Timer preset"><button class="selected" data-preset="focus">Focus<span>25 min</span></button><button data-preset="short">Short break<span>5 min</span></button><button data-preset="long">Long break<span>15 min</span></button></div>
+      <div class="studio-timer"><svg viewBox="0 0 200 200" aria-hidden="true"><circle class="timer-base" cx="100" cy="100" r="90"/><circle id="timer-ring" cx="100" cy="100" r="90"/></svg><div class="timer-centre"><div class="full-timer" id="full-timer-display">25:00</div><p id="focus-full-mode">Focus session · 25 minutes</p></div></div>
+      <div class="focus-task-control"><label for="focus-task">What deserves your attention?</label><select id="focus-task"><option value="">Open focus · no task selected</option></select></div>
+      <div class="full-timer-controls"><button class="primary" id="full-timer-start"><span data-icon="play"></span>Start focusing</button><button class="secondary" id="full-timer-reset"><span data-icon="reset"></span>Reset</button></div><p id="focus-full-feedback">One breath. One thing. One step forward.</p>
+    </div><div class="focus-full-bottom">Make room for what matters.</div>
+  </dialog>
+  <div id="toasts" class="toast-container" aria-live="polite" aria-atomic="false"></div>
+</body>
+</html>
